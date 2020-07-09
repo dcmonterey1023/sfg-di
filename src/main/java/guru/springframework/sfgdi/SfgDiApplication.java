@@ -1,6 +1,8 @@
 package guru.springframework.sfgdi;
 
-import guru.springframework.sfgdi.controllers.*;
+import guru.springframework.sfgdi.controllers.MyController;
+import guru.springframework.sfgdi.examplebeans.FakeDataSource;
+import guru.springframework.sfgdi.examplebeans.FakeJmsBroker;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -11,30 +13,15 @@ public class SfgDiApplication {
 	public static void main(String[] args) {
 		ApplicationContext ctx = SpringApplication.run(SfgDiApplication.class, args);
 
-		System.out.println("-------------- Profile --------------");
-		I18nController i18nController = (I18nController) ctx.getBean("i18nController");
-		System.out.println(i18nController.sayGreeting());
-
-
-		System.out.println("-------------- Primary Bean --------------");
-
 		MyController myController = (MyController) ctx.getBean("myController");
-		System.out.println(myController.sayHello());
+		FakeDataSource fakeDataSource =  ctx.getBean(FakeDataSource.class);
 
-		System.out.println("-------------- Property Injection --------------");
+		System.out.println(fakeDataSource.getUser());
 
-		PropertyInjectionController propertyInjectionController = (PropertyInjectionController) ctx.getBean("propertyInjectionController");
-		System.out.println(propertyInjectionController.getGreeting());
 
-		System.out.println("-------------- Setter Injection --------------");
+		FakeJmsBroker fakeJmsBroker = ctx.getBean(FakeJmsBroker.class);
 
-		SetterInjectionController setterInjectionController = (SetterInjectionController) ctx.getBean("setterInjectionController");
-		System.out.println(setterInjectionController.getGreeting());
-
-		System.out.println("-------------- Constructor Injection --------------");
-
-		ConstructorInjectionController constructorInjectionController = (ConstructorInjectionController) ctx.getBean("constructorInjectionController");
-		System.out.println(constructorInjectionController.getGreeting());
+		System.out.println(fakeJmsBroker.getUsername());
 
 	}
 
